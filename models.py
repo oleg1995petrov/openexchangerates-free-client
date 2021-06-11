@@ -34,7 +34,7 @@ class Grabber(GrabberMixin):
     def latest(self) -> Tuple[str, int]:
         """Receives the latest exchange rates."""
         params = {'app_id=': self.api_key}
-        url = (self.LATEST + '?' + urlencode(params))
+        url = self.LATEST + '?' + urlencode(params)
         return super().receive(url)
     
     @retry
@@ -45,5 +45,5 @@ class Grabber(GrabberMixin):
             'prettyprint': prprint,
             'show_alternative': alt,
         }
-        url = (self.HISTORICAL % date + '?' + urlencode(params))
+        url = self.HISTORICAL % date + '?' + urlencode(params)
         return super().receive(url)
