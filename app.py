@@ -10,7 +10,7 @@ def main():
     grb = Grabber(API_KEY)
     rates, ts = grb.historical(DATE)  # or grb.latest() 
     date = datetime.datetime.utcfromtimestamp(ts).date()
-    query = """INSERT INTO exchange_rates (currency, rate, date) VALUES (%s, %s, %s)"""
+    query = "INSERT INTO exchange_rates (currency, rate, date) VALUES (%s, %s, %s)"
     
     for curr, rate in rates.items():
         cursor.execute(query, (curr, rate, date))
