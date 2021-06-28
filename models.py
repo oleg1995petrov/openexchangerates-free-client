@@ -46,15 +46,17 @@ class Client():
             params['symbols'] = ','.join(currencies)
 
         r = requests.get(url, params)
-        if r.status_code == 401:
-            raise APIKeyError
-        elif r.status_code == 200:
+        if r.status_code == 200:
             j = json.loads(r.text)
             rates = j['rates']
             ts = j['timestamp']
             if currencies:
                 self.check_currencies(rates, currencies)
             return (rates, ts)
+        elif r.status_code == 401:
+            raise APIKeyError
+        else: 
+            raise Exception('Something went wrong. Try again later.')
         
     @retry
     def latest(self, currencies) -> Tuple[str, int]:
@@ -79,10 +81,7 @@ class Client():
 
         Displays a list of missing currencies.
         """
-        missing = []
-        for curr in curr_list:
-            if curr not in rates:
-                missing.append(curr)
+        missing = [curr for curr in curr_list if curr not in rates]
         if missing:
             print(f"[{', '.join(missing)}] "
                   f"{'is' if len(missing) == 1 else 'are'} "
