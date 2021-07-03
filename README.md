@@ -1,3 +1,3 @@
-This is a simple python client of [https://openexchangerates.org] web services.
+This is a simple python client of [openexchangerates.org] web services.
 
-[https://openexchangerates.org]:https://openexchangerates.org
+[openexchangerates.org]:https://openexchangerates.org
